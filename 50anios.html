@@ -40,10 +40,10 @@
         }
 
         /* --- ANIMACIONES --- */
-        @keyframes crecerShrink {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
+        @keyframes flotar {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
         }
 
         @keyframes balanceo {
@@ -51,12 +51,6 @@
             25% { transform: rotate(2deg); }
             75% { transform: rotate(-2deg); }
             100% { transform: rotate(0deg); }
-        }
-
-        @keyframes flotar {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
         }
 
         @keyframes escribir {
@@ -73,6 +67,108 @@
             100% { opacity: 1; transform: translateY(0); filter: blur(0); }
         }
 
+        @keyframes aparecerZoom {
+            0% { opacity: 0; transform: scale(0.3); filter: brightness(3); }
+            60% { opacity: 1; transform: scale(1.1); filter: brightness(1.5); }
+            100% { opacity: 1; transform: scale(1); filter: brightness(1); }
+        }
+
+        @keyframes latido {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.6); }
+            50% { transform: scale(1.05); box-shadow: 0 0 0 12px rgba(212, 175, 55, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
+        }
+
+        /* --- ANIMACIÓN DE CAÍDA (ESCENA 0) --- */
+        @keyframes caerSobre {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            15% { transform: translateY(-30px) rotate(-5deg); opacity: 1; }
+            100% { transform: translateY(120vh) rotate(25deg); opacity: 0; }
+        }
+
+        @keyframes caerTexto {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            15% { transform: translateY(-20px) rotate(3deg); opacity: 1; }
+            100% { transform: translateY(120vh) rotate(-18deg); opacity: 0; }
+        }
+
+        @keyframes caerBoton {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            15% { transform: translateY(-15px) rotate(-3deg); opacity: 1; }
+            100% { transform: translateY(120vh) rotate(15deg); opacity: 0; }
+        }
+
+        .escena-0.cayendo .sorpresa-texto {
+            animation: caerTexto 1.4s forwards ease-in;
+        }
+
+        .escena-0.cayendo .sobre-img {
+            animation: caerSobre 1.4s forwards ease-in;
+        }
+
+        .escena-0.cayendo .btn-abrir {
+            animation: caerBoton 1.4s forwards ease-in;
+        }
+
+        /* --- ESCENA 0 (SOBRE) --- */
+        .escena-0 {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transition: opacity 0.6s ease-in-out;
+            z-index: 50;
+            padding: 70px;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        .sorpresa-texto {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.2rem;
+            color: #d4af37;
+            text-shadow: 1px 1px 4px #000, 0 0 12px rgba(212, 175, 55, 0.5);
+            animation: flotar 3s infinite ease-in-out;
+            margin: 0;
+            line-height: 1.2;
+        }
+
+        .sobre-img {
+            width: 90%;
+            max-width: 250px;
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5));
+            animation: flotar 4s infinite ease-in-out;
+            margin: 0;
+            padding: 0;
+        }
+
+        .btn-abrir {
+            margin-top: 5px;
+            padding: 12px 35px;
+            font-family: 'Playfair Display', serif;
+            font-size: 0.95rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #fff;
+            background: linear-gradient(135deg, #9e6b6b, #b5838d);
+            border: 2px solid #d4af37;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.3s;
+            animation: latido 2s infinite;
+        }
+
+        .btn-abrir:hover {
+            transform: scale(1.06);
+            background: linear-gradient(135deg, #8a5a5a, #9e6b6b);
+        }
+
         /* --- ESCENA 1 --- */
         .escena-1 {
             display: flex;
@@ -85,197 +181,33 @@
             position: absolute;
             top: 0;
             left: 0;
+            opacity: 0;
+            pointer-events: none;
             transition: opacity 1s ease-in-out;
             z-index: 10;
         }
 
         .numero-50 { width: 250px; animation: flotar 3s infinite ease-in-out; }
         .zapatos { width: 180px; animation: balanceo 3s infinite ease-in-out; transform-origin: bottom center; }
+        
         .nombre {
-            width: 80%; text-align: center; font-family: 'Great Vibes', cursive; font-size: 3.5rem; color: #d4af37;
-            text-shadow: 1px 1px 3px #000; white-space: nowrap; overflow: hidden; border-right: 3px solid #d4af37;
-            animation: escribir 3s steps(30, end) forwards, parpadeo 0.8s infinite;
-        }
-
-        /* --- ESCENA 2 --- */
-        .escena-2 {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            gap: 30px;
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 1s ease-in-out;
-            z-index: 20;
-        }
-
-        /* =========================================
-           CASET RETRO FIEL A LA FOTO
-           ========================================= */
-        .caset {
-            width: 240px;
-            height: 170px;
-            background: #1a1a1a;
-            border-radius: 15px;
-            border: 3px solid #333;
-            box-shadow: 
-                0 10px 20px rgba(0,0,0,0.8), 
-                inset 0 0 15px rgba(255,255,255,0.05),
-                0 0 0 2px #000;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            padding: 15px;
-            box-sizing: border-box;
-            animation: flotar 4s infinite ease-in-out;
-        }
-
-        .caset-etiqueta {
-            width: 100%;
-            height: 45px;
-            background: linear-gradient(135deg, #f5d3e4, #e8b7d2);
-            border-radius: 5px;
-            border: 2px solid #555;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-family: 'Dancing Script', cursive;
-            font-size: 1.1rem;
-            color: #333;
-            font-weight: bold;
-            margin-bottom: 10px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .caset-etiqueta::before {
-            content: '';
-            position: absolute;
-            top: 5px;
-            left: 10px;
-            right: 10px;
-            height: 2px;
-            background: rgba(0,0,0,0.1);
-        }
-
-        .caset-ventana {
-            width: 100%;
-            height: 60px;
-            background: #111111;
-            border-radius: 5px;
-            border: 2px solid #bb3f6e;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            margin-bottom: 10px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .cinta {
-            width: 40px;
-            height: 40px;
-            background: #700126;
-            border-radius: 50%;
-            border: 3px solid #555;
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .cinta::after {
-            content: '';
-            width: 15px;
-            height: 15px;
-            background: #d4af37;
-            border-radius: 50%;
-            border: 2px solid #f5d76e;
-        }
-
-        .caset-botones {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-            padding: 0 10px;
-            box-sizing: border-box;
-        }
-
-        .boton-grupo {
-            display: flex;
-            gap: 8px;
-        }
-
-        .boton {
-            width: 18px;
-            height: 12px;
-            background: #444444;
-            border-radius: 3px;
-            border: 1px solid #222;
-            box-shadow: inset 0 2px 3px rgba(255,255,255,0.1);
-        }
-
-        .boton-play {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, #d4af37, #f5d76e);
-            border-radius: 50%;
-            border: 3px solid #8b6914;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            box-shadow: 0 4px 10px rgba(212, 175, 55, 0.5);
-            transition: transform 0.2s;
-        }
-
-        .boton-play:hover {
-            transform: scale(1.1);
-        }
-
-        .boton-play svg {
-            width: 20px;
-            height: 20px;
-            fill: #333;
-            margin-left: 1.5px;
-        }
-
-        .boton-play.pausado svg {
-            display: none;
-        }
-
-        .boton-play.pausado::after {
-            content: '❚❚';
-            color: #333;
-            font-size: 16px;
-            font-weight: bold;
-        }
-
-        .frase {
-            font-family: 'Dancing Script', cursive;
-            font-size: 1.5rem;
-            text-align: center;
-            color: #ffb0db;
-            text-shadow: 1px 1px 3px #000, 0 0 10px rgba(255, 176, 219, 0.6);
-            line-height: 1.4;
-            padding: 0 20px;
             width: 80%;
+            text-align: center;
+            font-family: 'Great Vibes', cursive;
+            font-size: 3.5rem;
+            color: #d4af37;
+            text-shadow: 1px 1px 3px #000;
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: 3px solid transparent;
         }
 
-        .frase span {
-            opacity: 0;
-            display: inline-block;
-            animation: aparecerPalabra 0.8s forwards;
+        .nombre.escribiendo {
+            animation: escribir 3s steps(30, end) forwards, parpadeo 0.8s infinite;
+            border-right-color: #d4af37;
         }
 
-                /* --- ESCENA 3 --- */
+        /* --- ESCENA 3 --- */
         .escena-3 {
             display: flex;
             flex-direction: column;
@@ -304,7 +236,7 @@
 
         .escena-3 .nombre-monica {
             font-family: 'Great Vibes', cursive;
-            font-size: 2.4rem;
+            font-size: 2.8rem;
             color: #d4af37;
             text-shadow: 1px 1px 3px #000;
             margin-top: -15px;
@@ -314,7 +246,7 @@
 
         .subtitulo {
             font-family: 'Playfair Display', serif;
-            font-size: 1rem;
+            font-size: 1.15rem;
             color: #d4af37;
             letter-spacing: 2px;
             text-transform: uppercase;
@@ -324,17 +256,31 @@
 
         .frase-invitacion {
             font-family: 'Dancing Script', cursive;
-            font-size: 1.1rem;
+            font-size: 1.45rem;
             color: #ffb0db;
             text-shadow: 1px 1px 3px #000;
-            line-height: 1.3;
-            margin-bottom: 10px;
+            line-height: 1.4;
+            margin-bottom: 12px;
             padding: 0 5px;
+            width: 80%;
+            box-sizing: border-box;
+        }
+
+        .frase-invitacion span.palabra {
+            display: inline-block;
+            white-space: nowrap;
+            margin-right: 0.3em;
+        }
+
+        .frase-invitacion span.letra {
+            opacity: 0;
+            display: inline-block;
+            animation: aparecerPalabra 0.8s forwards;
         }
 
         .mes {
             font-family: 'Playfair Display', serif;
-            font-size: 1.3rem;
+            font-size: 1.4rem;
             color: #d4af37;
             letter-spacing: 2px;
             text-transform: uppercase;
@@ -350,7 +296,7 @@
             margin-bottom: 10px;
             color: #d4af37;
             font-family: 'Playfair Display', serif;
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             text-shadow: 1px 1px 2px #000;
         }
 
@@ -361,23 +307,23 @@
         }
 
         .fecha-hora .dia-semana {
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
         .fecha-hora .dia-numero {
-            font-size: 1.8rem;
+            font-size: 1.9rem;
             font-weight: bold;
         }
 
         .fecha-hora .hora {
-            font-size: 0.9rem;
+            font-size: 0.95rem;
         }
 
         .lugar {
             font-family: 'Playfair Display', serif;
-            font-size: 1rem;
+            font-size: 1.05rem;
             color: #ffb0db;
             line-height: 1.4;
             text-shadow: 1px 1px 2px #000;
@@ -389,15 +335,22 @@
             font-weight: bold;
             border-bottom: 1px solid #d4af37;
             transition: color 0.3s;
+            display: inline-block;
         }
 
         .lugar a:hover {
             color: #f5d76e;
         }
 
-        #musica {
-            display: none;
+        .lugar .ver-mapa {
+            display: block;
+            margin-top: 4px;
+            font-size: 0.85rem;
+            font-style: italic;
+            color: #d4af37;
+            opacity: 0.85;
         }
+
         /* --- ESCENA 4 --- */
         .escena-4 {
             display: flex;
@@ -413,54 +366,42 @@
             pointer-events: none;
             transition: opacity 1s ease-in-out;
             z-index: 40;
-            padding: 20px;
+            padding: 20px 20px 90px 20px;
             box-sizing: border-box;
             text-align: center;
             gap: 8px;
         }
 
-        /* Adorno superior (más grande) */
         .escena-4 .adorno-superior {
-            width: 250px;
+            width: 230px;
             margin-bottom: 5px;
             opacity: 0.9;
             animation: flotar 3s infinite ease-in-out;
         }
 
-        /* Frase principal con letras doradas y centradas */
         .frase-4 {
             font-family: 'Dancing Script', cursive;
-            font-size: 1.35rem;
+            font-size: 1.7rem;
             color: #d4af37;
             text-shadow: 1px 1px 3px #000, 0 0 8px rgba(212, 175, 55, 0.4);
-            line-height: 1.5;
+            line-height: 1.6;
             padding: 0 15px;
             width: 90%;
             box-sizing: border-box;
             text-align: center;
+            letter-spacing: 0.5px;
         }
 
         .frase-4 span {
             opacity: 0;
             display: inline-block;
             animation: aparecerZoom 0.9s forwards ease-out;
+            margin-right: 6px;
         }
 
-        /* Imagen de los zapatos dorados (más pequeña) */
-        .imagen-escena-4 {
-            width: 90px;
-            margin-top: 5px;
-            margin-bottom: 10px;
-            animation: balanceo 4s infinite ease-in-out;
-            transform-origin: bottom center;
-            z-index: 41;
-            pointer-events: none;
-        }
-
-        /* Texto "¿Nos acompañás?" */
         .nos-acompanas {
             font-family: 'Great Vibes', cursive;
-            font-size: 2.2rem;
+            font-size: 2.4rem;
             color: #9e6b6b;
             margin-top: 5px;
             margin-bottom: 0px;
@@ -470,10 +411,9 @@
             animation-delay: 1.5s;
         }
 
-        /* Texto "CONFIRMAR ANTES DEL 07/10" */
         .confirmar-fecha {
             font-family: 'Playfair Display', serif;
-            font-size: 0.95rem;
+            font-size: 1rem;
             color: #d4af37;
             font-weight: bold;
             letter-spacing: 2px;
@@ -486,7 +426,6 @@
             animation-delay: 2s;
         }
 
-        /* --- BOTONES DE WHATSAPP --- */
         .botones-whatsapp {
             display: flex;
             flex-direction: column;
@@ -546,110 +485,84 @@
             font-size: 1.1rem;
         }
 
-        /* Animación de zoom */
-        @keyframes aparecerZoom {
-            0% { 
-                opacity: 0; 
-                transform: scale(0.3); 
-                filter: brightness(3);
-            }
-            60% {
-                opacity: 1;
-                transform: scale(1.1);
-                filter: brightness(1.5);
-            }
-            100% { 
-                opacity: 1; 
-                transform: scale(1); 
-                filter: brightness(1);
-            }
+        #musica {
+            display: none;
         }
 
-        /* Animación de desvanecimiento suave (por si acaso) */
-        @keyframes aparecerDesvanecido {
-            0% { 
-                opacity: 0; 
-                transform: translateY(15px); 
-                filter: blur(8px);
-            }
-            100% { 
-                opacity: 1; 
-                transform: translateY(0); 
-                filter: blur(0);
-            }
+        /* =========================================
+           FLECHAS DE NAVEGACIÓN DISCRETAS
+           ========================================= */
+        .nav-flechas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 100;
+            opacity: 0;
+            transition: opacity 1.2s ease-in-out;
         }
 
-        /* Nueva animación: Zoom suave con brillo */
-        @keyframes aparecerZoom {
-            0% { 
-                opacity: 0; 
-                transform: scale(0.3); 
-                filter: brightness(3);
-            }
-            60% {
-                opacity: 1;
-                transform: scale(1.1);
-                filter: brightness(1.5);
-            }
-            100% { 
-                opacity: 1; 
-                transform: scale(1); 
-                filter: brightness(1);
-            }
+        .nav-flechas.visible {
+            opacity: 1;
         }
 
-        /* Nueva animación de desvanecimiento suave */
-        @keyframes aparecerDesvanecido {
-            0% { 
-                opacity: 0; 
-                transform: translateY(15px); 
-                filter: blur(8px);
-            }
-            100% { 
-                opacity: 1; 
-                transform: translateY(0); 
-                filter: blur(0);
-            }
+        .flecha {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: #9e6b6b;
+            border: 1px solid rgba(212, 175, 55, 0.45);
+            color: rgba(212, 175, 55, 0.85);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1rem;
+            cursor: pointer;
+            pointer-events: auto;
+            transition: background 0.3s, transform 0.2s, opacity 0.3s;
+            user-select: none;
         }
 
+        .flecha:hover {
+            background: rgba(212, 175, 55, 0.35);
+            transform: translateY(-50%) scale(1.12);
+        }
+
+        .flecha.desactivada {
+            opacity: 0.15;
+            pointer-events: none;
+        }
+
+        .flecha-izq {
+            left: 8px;
+        }
+
+        .flecha-der {
+            right: 8px;
+        }
     </style>
 </head>
 <body>
 
     <div class="tarjeta">
         
+        <!-- ESCENA 0 (SOBRE SORPRESA) -->
+        <div class="escena-0" id="escena0">
+            <div class="sorpresa-texto">Esto es una sorpresa</div>
+            <img src="img/sobre.png" alt="Sobre" class="sobre-img">
+            <button class="btn-abrir" id="btnAbrir" onclick="abrirTarjeta()">Abrir tarjeta</button>
+        </div>
+
         <!-- ESCENA 1 -->
         <div class="escena-1" id="escena1">
             <img src="img/50.png" alt="50 Años" class="numero-50">
-            <div class="nombre">Mónica Orona</div>
+            <div class="nombre" id="nombreMonica">Mónica Orona</div>
             <img src="img/zapatos.png" alt="Zapatos" class="zapatos">
-        </div>
-
-        <!-- ESCENA 2 -->
-        <div class="escena-2" id="escena2">
-            <div class="caset">
-                <div class="caset-etiqueta">Reproduce la música</div>
-                <div class="caset-ventana">
-                    <div class="cinta"></div>
-                    <div class="cinta"></div>
-                </div>
-                <div class="caset-botones">
-                    <div class="boton-grupo">
-                        <div class="boton"></div>
-                        <div class="boton"></div>
-                    </div>
-                    <div class="boton-play" id="btnPlay" onclick="toggleMusica()">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M8 5v14l11-7z"/>
-                        </svg>
-                    </div>
-                    <div class="boton-grupo">
-                        <div class="boton"></div>
-                        <div class="boton"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="frase" id="frase"></div>
         </div>
 
         <!-- ESCENA 3 -->
@@ -658,57 +571,57 @@
             <div class="nombre-monica">Mónica</div>
             <div class="subtitulo">Mis Años Dorados</div>
             
-            <div class="frase-invitacion">
-                Acompañame a Celebrar 50 años de camino. 
-                Tu presencia hará que este día sea inolvidable.
-            </div>
+            <div class="frase-invitacion" id="fraseInvitacion"></div>
 
             <div class="mes">Octubre</div>
             
             <div class="fecha-hora">
                 <span class="dia-semana">Viernes</span>
                 <span class="linea"></span>
-                <span class="dia-numero">10</span>
+                <span class="dia-numero">23</span>
                 <span class="linea"></span>
                 <span class="hora">22:00 PM</span>
             </div>
 
             <div class="lugar">
                 <strong>Lugar:</strong><br>
-                <a href="https://www.google.com/maps/search/?api=1&query=La+Rioja+135,+Concepción,+Tucumán" target="_blank">
-                    La Rioja 135, Concepción, Tucumán
+                    La Rioja 135, Concepción
+                <a href="https://www.google.com/maps/search/?api=1&query=La+Rioja+135,+Concepción,+Tucumán" target="_blank" class="ver-mapa">
+                    Ver dirección en Google Maps
                 </a>
             </div>
         </div>
 
-                <!-- ESCENA 4 -->
-                <!-- ESCENA 4 -->
+        <!-- ESCENA 4 -->
         <div class="escena-4" id="escena4">
-            <!-- Adorno superior -->
             <img src="img/adorno.png" alt="Adorno" class="adorno-superior">
             
-            <!-- Frase con efecto de zoom -->
             <div class="frase-4" id="frase4"></div>
                         
-            <!-- Texto "¿Nos acompañás?" -->
             <div class="nos-acompanas">¿Nos acompañás?</div>
             
-            <!-- Texto "CONFIRMAR ANTES DEL 07/10" -->
             <div class="confirmar-fecha">Confirmar antes del 07/10</div>
             
-            <!-- Botones de confirmación por WhatsApp -->
             <div class="botones-whatsapp">
                 <a href="https://wa.me/5493865621835?text=Hola%20Mónica,%20confirmo%20mi%20asistencia%20a%20tus%2050%20años.%20¡Sí,%20podré%20asistir!" 
                    target="_blank" 
-                   class="boton-wpp boton-si">
+                   class="boton-wpp boton-si"
+                   onclick="apagarMusica()">
                     <span class="icono">✓</span> SÍ, PODRÉ ASISTIR
                 </a>
                 <a href="https://wa.me/5493865621835?text=Hola%20Mónica,%20lamento%20informarte%20que%20no%20podré%20asistir%20a%20tus%2050%20años." 
                    target="_blank" 
-                   class="boton-wpp boton-no">
+                   class="boton-wpp boton-no"
+                   onclick="apagarMusica()">
                     <span class="icono">✕</span> NO PODRÉ ASISTIR
                 </a>
             </div>
+        </div>
+
+        <!-- FLECHAS DE NAVEGACIÓN -->
+        <div class="nav-flechas" id="navFlechas">
+            <div class="flecha flecha-izq" id="flechaIzq" onclick="cambiarEscena(-1)">‹</div>
+            <div class="flecha flecha-der" id="flechaDer" onclick="cambiarEscena(1)">›</div>
         </div>
 
     </div>
@@ -718,32 +631,67 @@
     <script>
         // --- CONFIGURACIÓN DE TIEMPOS ---
         const TIEMPO_ESPERA_ESCENA_1 = 5000;  // 5 segundos para la Escena 1
-        const TIEMPO_ESPERA_ESCENA_2 = 8000; // 8 segundos para la Escena 2
-        const TIEMPO_ENTRE_PALABRAS = 300;    // 0.3 segundos entre palabras
+        const TIEMPO_ESPERA_ESCENA_3 = 8000;  // 8 segundos para la Escena 3
+        const TIEMPO_CAIDA = 1400;             // Duración de la animación de caída
 
-        // --- LÓGICA DE TRANSICIÓN ---
-        
-        // Escena 1 -> Escena 2
-        setTimeout(() => {
-            document.getElementById('escena1').style.opacity = '0';
-            document.getElementById('escena1').style.pointerEvents = 'none';
+        let secuenciaIniciada = false;
 
-            const escena2 = document.getElementById('escena2');
-            escena2.style.opacity = '1';
-            escena2.style.pointerEvents = 'auto';
+        // --- CONTROL DE NAVEGACIÓN ---
+        // Índice actual de la escena visible (1, 3 o 4) una vez terminada la transición
+        let escenaActual = 1;
+        const ordenEscenas = [1, 3, 4];
 
-            iniciarEfectoPalabras();
+        // --- FUNCIÓN PRINCIPAL: ABRIR TARJETA ---
+        function abrirTarjeta() {
+            if (secuenciaIniciada) return;
+            secuenciaIniciada = true;
 
-                        // Escena 2 -> Escena 3
+            // Reproducir música
+            const musica = document.getElementById('musica');
+            musica.play().catch(e => console.log("Error al reproducir:", e));
+
+            // Activar animación de caída en Escena 0
+            const escena0 = document.getElementById('escena0');
+            escena0.classList.add('cayendo');
+
+            // Después de que termina la caída, ocultamos la escena 0 y mostramos la 1
             setTimeout(() => {
-                document.getElementById('escena2').style.opacity = '0';
-                document.getElementById('escena2').style.pointerEvents = 'none';
+                escena0.style.opacity = '0';
+                escena0.style.pointerEvents = 'none';
+
+                const escena1 = document.getElementById('escena1');
+                escena1.style.opacity = '1';
+                escena1.style.pointerEvents = 'auto';
+
+                // Activar animación de máquina de escribir recién ahora
+                const nombreMonica = document.getElementById('nombreMonica');
+                nombreMonica.classList.add('escribiendo');
+
+                escenaActual = 1;
+
+                // Iniciar secuencia
+                iniciarSecuencia();
+
+            }, TIEMPO_CAIDA);
+        }
+
+        // --- SECUENCIA DE ESCENAS (AUTOMÁTICA) ---
+        function iniciarSecuencia() {
+            // Preparar efecto letra por letra de la Escena 3
+            iniciarEfectoLetrasEscena3();
+
+            // Escena 1 -> Escena 3
+            setTimeout(() => {
+                document.getElementById('escena1').style.opacity = '0';
+                document.getElementById('escena1').style.pointerEvents = 'none';
 
                 const escena3 = document.getElementById('escena3');
                 escena3.style.opacity = '1';
                 escena3.style.pointerEvents = 'auto';
 
-                // Escena 3 -> Escena 4 (después de 8 segundos)
+                escenaActual = 3;
+
+                // Escena 3 -> Escena 4
                 setTimeout(() => {
                     document.getElementById('escena3').style.opacity = '0';
                     document.getElementById('escena3').style.pointerEvents = 'none';
@@ -752,77 +700,127 @@
                     escena4.style.opacity = '1';
                     escena4.style.pointerEvents = 'auto';
 
-                    iniciarEfectoDesvanecido();
+                    escenaActual = 4;
 
-                }, 8000); // 8 segundos de espera
+                    iniciarEfectoZoomEscena4();
 
-            }, TIEMPO_ESPERA_ESCENA_2);
+                    // Mostrar flechas al terminar la última escena
+                    setTimeout(() => {
+                        document.getElementById('navFlechas').classList.add('visible');
+                        actualizarFlechas();
+                    }, 1200);
 
-        }, TIEMPO_ESPERA_ESCENA_1);
+                }, TIEMPO_ESPERA_ESCENA_3);
 
-        // --- EFECTO DE APARICIÓN LETRA POR LETRA (RESPETANDO PALABRAS) ---
-        function iniciarEfectoPalabras() {
-            const fraseTexto = "Acompáñame a celebrar un año más de vida... pasemos una noche agradable, recordemos viejos tiempos y hagamos nuevas memorias.";
-            const contenedorFrase = document.getElementById('frase');
+            }, TIEMPO_ESPERA_ESCENA_1);
+        }
+
+        // --- EFECTO LETRA POR LETRA (ESCENA 3) ---
+        function iniciarEfectoLetrasEscena3() {
+            const fraseTexto = "Acompañame a Celebrar 50 años de camino.";
+            const contenedor = document.getElementById('fraseInvitacion');
             const palabras = fraseTexto.split(" ");
-            contenedorFrase.innerHTML = "";
+            contenedor.innerHTML = "";
 
             let contadorLetras = 0;
 
             palabras.forEach((palabra) => {
                 const spanPalabra = document.createElement('span');
-                spanPalabra.style.display = 'inline-block';
-                spanPalabra.style.whiteSpace = 'nowrap';
+                spanPalabra.classList.add('palabra');
 
                 for (let i = 0; i < palabra.length; i++) {
-                    const letra = palabra[i];
                     const spanLetra = document.createElement('span');
-                    spanLetra.textContent = letra;
-                    spanLetra.style.animationDelay = (contadorLetras * (TIEMPO_ENTRE_PALABRAS / 7000)) + "s";
+                    spanLetra.classList.add('letra');
+                    spanLetra.textContent = palabra[i];
+                    spanLetra.style.animationDelay = (contadorLetras * 0.05) + "s";
                     spanPalabra.appendChild(spanLetra);
                     contadorLetras++;
                 }
 
-                const espacio = document.createElement('span');
-                espacio.innerHTML = "&nbsp;";
-                espacio.style.animationDelay = (contadorLetras * (TIEMPO_ENTRE_PALABRAS / 1000)) + "s";
-                spanPalabra.appendChild(espacio);
+                contenedor.appendChild(spanPalabra);
                 contadorLetras++;
-
-                contenedorFrase.appendChild(spanPalabra);
             });
         }
-                // --- EFECTO DE APARICIÓN ZOOM (ESCENA 4) ---
-        function iniciarEfectoDesvanecido() {
-            const fraseTexto = "Porque la vida no se mide en años, sino en los momentos compartidos con las personas que aman. Este será un momento para recordar.";
+
+        // --- EFECTO ZOOM (ESCENA 4) ---
+        function iniciarEfectoZoomEscena4() {
+            const fraseTexto = "Porque la vida no se mide en años, sino en los momentos compartidos con las personas que aman.";
             const contenedorFrase = document.getElementById('frase4');
             const palabras = fraseTexto.split(" ");
             contenedorFrase.innerHTML = "";
 
             palabras.forEach((palabra, index) => {
                 const spanPalabra = document.createElement('span');
-                spanPalabra.style.display = 'inline-block';
-                spanPalabra.style.whiteSpace = 'nowrap';
                 spanPalabra.textContent = palabra + " ";
                 spanPalabra.style.animationDelay = (index * 0.25) + "s";
                 contenedorFrase.appendChild(spanPalabra);
             });
         }
 
-        // --- FUNCIÓN PARA REPRODUCIR/PAUSAR MÚSICA ---
-        let reproduciendo = false;
-        function toggleMusica() {
+        // --- APAGAR MÚSICA AL CONFIRMAR ---
+        function apagarMusica() {
             const musica = document.getElementById('musica');
-            const btn = document.getElementById('btnPlay');
-            
-            if (reproduciendo) {
-                musica.pause();
-                btn.classList.add('pausado');
-            } else {
-                musica.play();
-                btn.classList.remove('pausado');
+            musica.pause();
+            musica.currentTime = 0;
+        }
+
+        // =========================================
+        // NAVEGACIÓN MANUAL CON FLECHAS
+        // =========================================
+        function cambiarEscena(direccion) {
+            const indiceActual = ordenEscenas.indexOf(escenaActual);
+            const nuevoIndice = indiceActual + direccion;
+
+            // Si se sale del rango, no hacer nada
+            if (nuevoIndice < 0 || nuevoIndice >= ordenEscenas.length) return;
+
+            const nuevaEscena = ordenEscenas[nuevoIndice];
+
+            // Ocultar todas las escenas
+            [1, 3, 4].forEach(n => {
+                const el = document.getElementById('escena' + n);
+                el.style.opacity = '0';
+                el.style.pointerEvents = 'none';
+            });
+
+            // Mostrar la nueva escena
+            const elNueva = document.getElementById('escena' + nuevaEscena);
+            elNueva.style.opacity = '1';
+            elNueva.style.pointerEvents = 'auto';
+
+            // Si es la escena 3, reactivar el efecto letra por letra
+            if (nuevaEscena === 3) {
+                iniciarEfectoLetrasEscena3();
             }
-            reproduciendo = !reproduciendo;
+
+            // Si es la escena 4, reactivar el efecto zoom
+            if (nuevaEscena === 4) {
+                iniciarEfectoZoomEscena4();
+            }
+
+            escenaActual = nuevaEscena;
+            actualizarFlechas();
+        }
+
+        // Actualiza el estado de las flechas según la escena actual
+        function actualizarFlechas() {
+            const indiceActual = ordenEscenas.indexOf(escenaActual);
+            const flechaIzq = document.getElementById('flechaIzq');
+            const flechaDer = document.getElementById('flechaDer');
+
+            // Flecha izquierda desactivada en la primera escena
+            if (indiceActual <= 0) {
+                flechaIzq.classList.add('desactivada');
+            } else {
+                flechaIzq.classList.remove('desactivada');
+            }
+
+            // Flecha derecha desactivada en la última escena
+            if (indiceActual >= ordenEscenas.length - 1) {
+                flechaDer.classList.add('desactivada');
+            } else {
+                flechaDer.classList.remove('desactivada');
+            }
         }
     </script>
 
